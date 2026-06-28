@@ -109,19 +109,20 @@ public class Main {
     System.out.println("┃  ➤ [5] Back                                      ┃");
     System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     getChoice(1,5);
+    System.out.println();
         
     }
 
     private static void userMenu(){
-    System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-    System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
-    System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-    System.out.println("┃  ➤ [1] Play by Categories                        ┃");
-    System.out.println("┃  ➤ [2] Play by Random                            ┃");
-    System.out.println("┃  ➤ [3] View Statistics                           ┃");
-    System.out.println("┃  ➤ [4] Back                                      ┃");    
-    System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    getChoice(1,5);
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃  ➤ [1] Play by Categories                        ┃");
+        System.out.println("┃  ➤ [2] Play by Random                            ┃");
+        System.out.println("┃  ➤ [3] View Statistics                           ┃");
+        System.out.println("┃  ➤ [4] Back                                      ┃");    
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        getChoice(1,5);
     }
 
     private static void exit(){
