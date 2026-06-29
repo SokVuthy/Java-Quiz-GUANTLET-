@@ -15,19 +15,30 @@ public class Main {
 
     private static Object ui;
 
+
+
+
+//                    ========  Main screen ==========
     public static void main(String[] args){
-        
         clearScreen();
         initializeApp();
         runningApp();
         System.out.println("Good Bye My Love..... Muah Muah kiss kiss");
     }
+    //  =====================================================================
 
+
+
+//                 ============== Loading when execute ======================
     private static void initializeApp(){
         showLoading("Initializing Quiz Gauntlet" );
         System.out.println("Ready!!");
     }
+    // ===========================================
 
+
+
+    //            ================= Loop while execution===================
     private static void runningApp(){
         System.out.println("Running application..");
         while (isRunning){
@@ -48,9 +59,13 @@ public class Main {
             }
         }
     }
+    // ======================================================================
+
+    //           =================   Main Menu =================
     
     private static void displayMainMenu(){
         showWelcomeBanner();
+
         System.out.println();
         System.out.println();
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
@@ -61,7 +76,11 @@ public class Main {
         System.out.println("┃  ➤ [3] Exit                                      ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
     }
+    // =============================================================================
 
+
+
+    //           ==================== Global choice getting :  =====================
     private static int getChoice(int min, int max){
         int choice = 0;
         boolean valid = false;
@@ -84,6 +103,10 @@ public class Main {
         }
         return choice;
     }
+    // ======================================================
+
+
+    //           ==================== authentication for admin ====================
 
     private static void adminLogin(){
         System.out.println("Log in as Admin");
@@ -98,20 +121,24 @@ public class Main {
         }
     }
 
+    //                 ==================== Admin Menu==================
+
     private static void adminMenu(){
-    System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-    System.out.println("┃                ⚙ ADMIN MENU ⚙                    ┃");
-    System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-    System.out.println("┃  ➤ [1] Create Question                           ┃");
-    System.out.println("┃  ➤ [2] Review Question                           ┃");
-    System.out.println("┃  ➤ [3] Update Question                           ┃");
-    System.out.println("┃  ➤ [4] Delete Question                           ┃");
-    System.out.println("┃  ➤ [5] Back                                      ┃");
-    System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    getChoice(1,5);
-    System.out.println();
-        
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃                ⚙ ADMIN MENU ⚙                    ┃");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃  ➤ [1] Create Question                           ┃");
+        System.out.println("┃  ➤ [2] Review Question                           ┃");
+        System.out.println("┃  ➤ [3] Update Question                           ┃");
+        System.out.println("┃  ➤ [4] Delete Question                           ┃");
+        System.out.println("┃  ➤ [5] Back                                      ┃");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        getChoice(1,5);
+        System.out.println();
+            
     }
+
+    //               ==================  User Menu=================
 
     private static void userMenu(){
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
@@ -125,6 +152,9 @@ public class Main {
         getChoice(1,5);
     }
 
+
+    //             ========= Exit confirmation and then break the whole loop ==========
+
     private static void exit(){
         System.out.println("Are you sure you want to leave? (Y/N): ");
         String answer = input.next();
@@ -135,10 +165,15 @@ public class Main {
         
     }
 
+    //              ========clear heading terminal prompt to get space when start execution ==================
+
     private static void clearScreen() {
     System.out.print("\033[H\033[2J");
     System.out.flush();
     }
+
+    //                  ======  Loading effect=======
+
     private static void showLoading(String message){
         try{
             System.out.println("Initializing");
@@ -156,6 +191,8 @@ public class Main {
         }
     }
     
+    //                    ========= Welcome banner=========
+
     private static void showWelcomeBanner(){
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃               ★ QUIZ GAUNTLET ★                  ┃");
