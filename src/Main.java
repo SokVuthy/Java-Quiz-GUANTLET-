@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -32,6 +33,8 @@ public class Main {
 //                 ============== Loading when execute ======================
     private static void initializeApp(){
         showLoading("Initializing Quiz Gauntlet" );
+        
+
         System.out.println("Ready!!");
     }
     // ===========================================
