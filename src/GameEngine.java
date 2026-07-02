@@ -28,7 +28,7 @@ public class GameEngine {
         while (!deck.isEmpty() && lives > 0) {
             Question q = deck.get(current);
 
-            ui.displayQuestion(q, current + 1, deck.size(), score);
+            ui.displayQuestion(q, current + 1, deck.size(), score, correctCount,totalQuestions);
             char userAnswer = ui.getAnswerInput();
 
             if (userAnswer == 'Q') {
@@ -57,8 +57,10 @@ public class GameEngine {
     private void endGame() {
         if (deck.isEmpty()) {
             ui.displayWinScreen(score, totalQuestions);
-        } else {
+        } 
+        else {
             ui.displayGameOverScreen(score, correctCount, totalQuestions);
+            
         }
     }
 

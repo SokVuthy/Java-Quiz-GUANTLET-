@@ -24,7 +24,7 @@ public class UserInterface {
         printBox(
             "  ╔══════════════════════════════════════╗",
             "  ║        QUIZ GAUNTLET                 ║",
-            "  ║      20-Question Challenge Game       ║",
+            "  ║      20-Question Challenge Game      ║",
             "  ╠══════════════════════════════════════╣",
             "  ║  [1]  Play Game                      ║",
             "  ║  [2]  Admin Panel                    ║",
@@ -32,7 +32,6 @@ public class UserInterface {
             "  ║  [0]  Exit                           ║",
             "  ╚══════════════════════════════════════╝"
         );
-        System.out.print("  👉  Enter your choice: ");
     }
 
     // Method 2 – Display the admin menu
@@ -49,7 +48,6 @@ public class UserInterface {
             "  ║  [0]  Back to Main Menu              ║",
             "  ╚══════════════════════════════════════╝"
         );
-        System.out.print("  👉  Enter your choice: ");
     }
 
     // Method 3 – Display the category selection menu
@@ -67,22 +65,20 @@ public class UserInterface {
             "  ║  [0]  Back                          ║",
             "  ╚══════════════════════════════════════╝"
         );
-        System.out.print("  👉  Enter your choice: ");
     }
 
     // Method 4 – Display the user gateway menu
-    public void displayUserMenu() {
-        printBox(
-            "  ╔══════════════════════════════════════╗",
-            "  ║             USER MENU                ║",
-            "  ╠══════════════════════════════════════╣",
-            "  ║  [1]  Start Quiz                     ║",
-            "  ║  [2]  How to Play                    ║",
-            "  ║  [0]  Back to Main Menu              ║",
-            "  ╚══════════════════════════════════════╝"
-        );
-        System.out.print("  👉  Enter your choice: ");
-    }
+    // public void displayUserMenu() {
+    //     printBox(
+    //         "  ╔══════════════════════════════════════╗",
+    //         "  ║             USER MENU                ║",
+    //         "  ╠══════════════════════════════════════╣",
+    //         "  ║  [1]  Start Quiz                     ║",
+    //         "  ║  [2]  How to Play                    ║",
+    //         "  ║  [0]  Back to Main Menu              ║",
+    //         "  ╚══════════════════════════════════════╝"
+    //     );
+    // }
 
     // ==========================================================
     //  QUESTION DISPLAY
@@ -90,32 +86,36 @@ public class UserInterface {
 
     // Method 5 – Display a single question during gameplay
     // Uses: q.getQuestionText(), q.getOptionA/B/C/D(), q.getID()
-    public void displayQuestion(Question q, int questionNumber, int totalRemaining, int score) {
+    public void displayQuestion(Question q, int questionNumber, int totalRemaining, int score, int correct, int total) {
         System.out.println();
-        System.out.println("  ┌──────────────────────────────────────────┐");
-        System.out.printf ("  │  Question #%-3d  Remaining: %-3d  Score: %-3d│%n",
+        System.out.println("  ╔══════════════════════════════════════════════════════════════╗");
+        System.out.printf ("  ║  Question #%-3d  Remaining: %-3d  Score: %-3d                   ║%n",
                             questionNumber, totalRemaining, score);
-        System.out.println("  ├──────────────────────────────────────────┤");
-
-        // Word-wrap question text to fit box width of 42 chars
-        String qText = q.getQuestionText();
-        if (qText.length() <= 42) {
-            System.out.printf("  │  %-42s│%n", qText);
-        } else {
-            System.out.printf("  │  %-42s│%n", qText.substring(0, 42));
-            String rest = qText.substring(42, Math.min(84, qText.length()));
-            System.out.printf("  │  %-42s│%n", rest);
+        System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
+        int filled = (total > 0) ? (int)((correct / (double) total) * 20) : 0;
+        StringBuilder bar = new StringBuilder("[");
+        for (int i = 0; i < 20; i++) {
+            bar.append(i < filled ? "█" : "░");
         }
-
-        System.out.println("  ├──────────────────────────────────────────┤");
-
-        // Display each option using Putta's individual getters
-        System.out.printf("  │  [A]  %-37s│%n", q.getOptionA());
-        System.out.printf("  │  [B]  %-37s│%n", q.getOptionB());
-        System.out.printf("  │  [C]  %-37s│%n", q.getOptionC());
-        System.out.printf("  │  [D]  %-37s│%n", q.getOptionD());
-
-        System.out.println("  └──────────────────────────────────────────┘");
+        bar.append("]");
+        System.out.printf("  ║  Progress: %s  %d / %d correct            ║%n", 
+                        bar.toString(), correct, total);
+        System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
+        String qText = q.getQuestionText();
+        if (qText.length() <= 50) {
+            System.out.printf("  ║  %-60s║%n", qText);
+        } else {
+            System.out.printf("  ║  %-60s║%n", qText.substring(0, 50));
+            String rest = qText.substring(50, Math.min(100, qText.length()));
+            System.out.printf("  ║  %-60s║%n", rest);
+        }
+        
+        System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
+        System.out.printf("  ║  [A]  %-55s║%n", q.getOptionA());
+        System.out.printf("  ║  [B]  %-55s║%n", q.getOptionB());
+        System.out.printf("  ║  [C]  %-55s║%n", q.getOptionC());
+        System.out.printf("  ║  [D]  %-55s║%n", q.getOptionD());
+        System.out.println("  ╚══════════════════════════════════════════════════════════════╝");
         System.out.print(" Your answer (A/B/C/D  or  Q to quit): ");
     }
 
@@ -164,8 +164,8 @@ public class UserInterface {
         System.out.println("  ║      CONGRATULATIONS!  YOU WON!            ║");
         System.out.println("  ║                                            ║");
         System.out.println("  ╠════════════════════════════════════════════╣");
-        System.out.printf ("  ║      All %2d questions answered correctly  ║%n", totalQuestions);
-        System.out.printf ("  ║     Final Score : %-5d / %-5d points   ║%n",
+        System.out.printf ("  ║      All %2d questions answered correctly   ║%n", totalQuestions);
+        System.out.printf ("  ║     Final Score : %-5d / %-5d points     ║%n",
                             score, totalQuestions * 10);
         System.out.println("  ║                                            ║");
         System.out.println("  ╚════════════════════════════════════════════╝");
@@ -180,10 +180,10 @@ public class UserInterface {
         System.out.println("  ║               GAME OVER                    ║");
         System.out.println("  ║                                            ║");
         System.out.println("  ╠════════════════════════════════════════════╣");
-        System.out.printf ("  ║      Correct answers  : %-3d               ║%n", correctCount);
-        System.out.printf ("  ║      Still remaining  : %-3d               ║%n",
+        System.out.printf ("  ║      Correct answers  : %-3d                ║%n", correctCount);
+        System.out.printf ("  ║      Still remaining  : %-3d                ║%n",
                             totalQuestions - correctCount);
-        System.out.printf ("  ║        Final Score      : %-5d points      ║%n", score);
+        System.out.printf ("  ║        Final Score      : %-5d points     ║%n", score);
         System.out.println("  ║                                            ║");
         System.out.println("  ╚════════════════════════════════════════════╝");
         pauseForUser();
@@ -251,16 +251,16 @@ public class UserInterface {
     // ==========================================================
 
     // Method 12 – Get an integer menu choice safely
-    public int getIntInput(String prompt) {
-        while (true) {
-            System.out.print("  " + prompt);
-            try {
-                return Integer.parseInt(scanner.nextLine().trim());
-            } catch (NumberFormatException e) {
-                displayError("Please enter a valid number.");
-            }
-        }
-    }
+    // public int getIntInput(String prompt) {
+    //     while (true) {
+    //         System.out.print("  " + prompt);
+    //         try {
+    //             return Integer.parseInt(scanner.nextLine().trim());
+    //         } catch (NumberFormatException e) {
+    //             displayError("Please enter a valid number.");
+    //         }
+    //     }
+    // }
 
     // Method 13 – Get answer input A/B/C/D or Q to quit
     // Returns char to match Question's correctAnswer field type
@@ -361,7 +361,7 @@ public class UserInterface {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════╗");
         System.out.println("  ║                                          ║");
-        System.out.println("  ║      WELCOME TO QUIZ GAUNTLET         ║");
+        System.out.println("  ║      WELCOME TO QUIZ GAUNTLET            ║");
         System.out.println("  ║        20-Question Challenge Game        ║");
         System.out.println("  ║                                          ║");
         System.out.println("  ║      ITM 201 – Java Programming I        ║");
@@ -374,8 +374,8 @@ public class UserInterface {
     public void displayExitMessage() {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════╗");
-        System.out.println("  ║  Thanks for playing Quiz Gauntlet!    ║");
-        System.out.println("  ║       See you next time!  🌟              ║");
+        System.out.println("  ║  Thanks for playing Quiz Gauntlet!       ║");
+        System.out.println("  ║       See you next time!  🌟             ║");
         System.out.println("  ╚══════════════════════════════════════════╝");
         System.out.println();
     }

@@ -14,8 +14,10 @@ public class Main {
     public static void main(String[] args) {
         clearScreen();
         initializeApp();
+        while (isRunning){
         runningApp();
-        System.out.println("Good Bye My Love..... Muah Muah kiss kiss");
+        }
+        ui.displayExitMessage();
     }
 
     private static void initializeApp() {
@@ -30,18 +32,21 @@ public class Main {
         System.out.println("Running application..");
         while (isRunning) {
             displayMainMenu();
-            switch (getChoice(1, 3)) {
+            switch (getChoice(0,3)) {
                 case 1:
-                    adminLogin();
+                    userMenu();;
                     break;
                 case 2:
-                    userMenu();
+                    adminLogin();              
                     break;
                 case 3:
+                    showStatistics();
+                    break;
+                case 0:
                     exit();
                     break;
                 default:
-                    System.out.println("Choice must be 1-3");
+                    System.out.println("Choice must be 0-3");
                     break;
             }
         }
@@ -53,6 +58,7 @@ public class Main {
 
         while (!valid) {
             try {
+                System.out.print("Choice: ");
                 if (!input.hasNextInt()) {
                     if (!input.hasNextLine()) {
                         isRunning = false;
@@ -63,7 +69,6 @@ public class Main {
                     continue;
                 }
 
-                System.out.print("Choice: ");
                 choice = input.nextInt();
                 input.nextLine();
 
@@ -93,102 +98,125 @@ public class Main {
     }
 
     private static void displayMainMenu() {
-        showWelcomeBanner();
-        System.out.println();
-        System.out.println();
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃        ⚔ QUIZ GAUNTLET: THE CHALLENGE ⚔          ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃  ➤ [1] Admin                                     ┃");
-        System.out.println("┃  ➤ [2] User                                      ┃");
-        System.out.println("┃  ➤ [3] Exit                                      ┃");
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        ui.displayWelcomeBanner();
+        ui.displayMainMenu();
     }
 
     private static void adminMenu() {
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃                ⚙ ADMIN MENU ⚙                    ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃  ➤ [1] View Questions                            ┃");
-        System.out.println("┃  ➤ [2] View Statistics                           ┃");
-        System.out.println("┃  ➤ [3] Back                                      ┃");
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        int choice = getChoice(1, 3);
-        switch (choice) {
-            case 1:
-                ui.displayAllQuestions(questionBank.getAllQuestions());
-                break;
-            case 2:
-                showStatistics();
-                break;
-            case 3:
-                break;
-            default:
-                break;
+        boolean inAdminMenu= true;
+        while (inAdminMenu){
+            ui.displayAdminMenu();
+            int choice = getChoice(0, 5);
+            switch (choice) {
+                case 1:
+                    ui.displayAllQuestions(questionBank.getAllQuestions());
+                    break;
+                case 2:
+                    questionBank.addQuestion(null);;        // need fixing //
+                    break;
+                case 3:
+                    System.out.println("Which quesetion do you want to update ?(ID)");
+                    int id = input.nextInt();
+                    input.nextLine();
+                    Question existQuestion = questionBank.getQuestionById(id);
+                    if (existQuestion==null){
+                        System.out.println("Question Not Found!");
+                        break;
+                    }
+                    System.out.println("\nEnter new question details:");
+                    System.out.print("Question text: ");
+                    String text = input.nextLine();
+                    System.out.print("Option A: ");
+                    String optA = input.nextLine();
+                    System.out.print("Option B: ");
+                    String optB = input.nextLine();
+                    System.out.print("Option C: ");
+                    String optC = input.nextLine();
+                    System.out.print("Option D: ");
+                    String optD = input.nextLine();
+                    System.out.print("Correct answer (A/B/C/D): ");
+                    char correct = input.nextLine().toUpperCase().charAt(0);
+                    System.out.print("Category: ");
+                    String category = input.nextLine();
+                    existQuestion.updateFields(text, optA, optB, optC, optD, correct, category);
+                    System.out.println("[OK] Question #" + id + " updated successfully.");
+                    break;
+                    
+                default:
+                    inAdminMenu = false;
+                    break;
+            }
         }
     }
 
     private static void userMenu() {
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃  ➤ [1] Play by Categories                        ┃");
-        System.out.println("┃  ➤ [2] Play by Random                            ┃");
-        System.out.println("┃  ➤ [3] How to Play                               ┃");
-        System.out.println("┃  ➤ [4] View Statistics                           ┃");
-        System.out.println("┃  ➤ [5] Back                                      ┃");
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        int choice = getChoice(1, 5);
-        switch (choice) {
-            case 1:
-                startCategoryGame();
-                break;
-            case 2:
-                startGameFlow(null);
-                break;
-            case 3:
-                ui.displayHowToPlay();
-                break;
-            case 4:
-                showStatistics();
-                break;
-            case 5:
-                break;
-            default:
-                break;
+        boolean inUserMenu =true;
+
+        while (inUserMenu){
+            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃  ➤ [1] Play by Categories                        ┃");
+            System.out.println("┃  ➤ [2] Play by Random                            ┃");
+            System.out.println("┃  ➤ [3] How to Play                               ┃");
+            System.out.println("┃  ➤ [4] View Statistics                           ┃");
+            System.out.println("┃  ➤ [5] Back                                      ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            int choice = getChoice(1, 5);
+            switch (choice) {
+                case 1:
+                    startCategoryGame();   
+                    break;
+                case 2:
+                    startGameFlow(null);
+                    break;
+                case 3:
+                    ui.displayHowToPlay();
+                    break;
+                case 4:
+                    showStatistics();
+                    break;
+                case 5:
+                    inUserMenu = false;
+                    break;
+                default:
+
+                    break;
+            }
         }
     }
 
     private static void startCategoryGame() {
         ui.displayCategoryMenu();
         int choice = getChoice(0, 6);
-        if (choice == 0) {
-            return;
-        }
-
-        String category = null;
-        switch (choice) {
-            case 1:
-                category = "Science";
-                break;
-            case 2:
-                category = "History";
-                break;
-            case 3:
-                category = "Math";
-                break;
-            case 4:
-                category = "Geography";
-                break;
-            case 5:
-                category = "Entertainment";
-                break;
-            case 6:
-                category = null;
-                break;
-            default:
+            if (choice == 0) {
                 return;
-        }
+            }
+            String category = null;
+            switch (choice) {
+                case 1:
+                    category = "Science";
+                    break;
+                case 2:
+                    category = "History";
+                    break;
+                case 3:
+                    category = "Math";
+                    break;
+                case 4:
+                    category = "Geography";
+                    break;
+                case 5:
+                    category = "Entertainment";
+                    break;
+                case 6:
+                    category = null;
+                    break;
+                default:
+                    return;
+            }
+        
+
 
         startGameFlow(category);
     }
@@ -246,21 +274,6 @@ public class Main {
         }
     }
 
-    private static void showWelcomeBanner() {
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃               ★ QUIZ GAUNTLET ★                  ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃        American University of Phnom Penh         ┃");
-        System.out.println("┃               Java Final Project                 ┃");
-        System.out.println("┃                  Group 67 Gang                   ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃        >>> WELCOME TO QUIZ GAUNTLET <<<          ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃                 HOW TO PLAY                      ┃");
-        System.out.println("┃  • User can play by Category or Random mode.     ┃");
-        System.out.println("┃  • Answer questions and earn your score.         ┃");
-        System.out.println("┃  • Can you conquer the Quiz Gauntlet?            ┃");
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    }
+
 }
 

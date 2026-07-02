@@ -68,7 +68,6 @@ public class QuestionBank {
         for (int i = 0; i < questions.size(); i++) {
             if (questions.get(i).getID() == id) {
                 questions.set(i, updatedQuestion);
-                System.out.println("[OK] Question #" + id + " updated successfully.");
                 return true;
             }
         }
