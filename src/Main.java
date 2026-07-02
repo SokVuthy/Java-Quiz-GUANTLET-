@@ -1,59 +1,43 @@
 
-import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Main {
 
     private static final Scanner input = new Scanner(System.in);
-
     private static final String PASSWORD = "admin1213";
-
-    private static final int MIN_QUESTION = 20, MAX_QUESTION = 200;
-
     private static boolean isRunning = true;
 
-    private static Object questionBank;
+    private static QuestionBank questionBank;
+    private static UserInterface ui;
 
-    private static Object ui;
-
-
-
-
-//                    ========  Main screen ==========
-    public static void main(String[] args){
+    public static void main(String[] args) {
         clearScreen();
         initializeApp();
         runningApp();
         System.out.println("Good Bye My Love..... Muah Muah kiss kiss");
     }
-    //  =====================================================================
 
-
-
-//                 ============== Loading when execute ======================
-    private static void initializeApp(){
-        showLoading("Initializing Quiz Gauntlet" );
-        
-
+    private static void initializeApp() {
+        showLoading("Initializing Quiz Gauntlet");
+        questionBank = new QuestionBank();
+        ui = new UserInterface(input);
+        ui.displayWelcomeBanner();
         System.out.println("Ready!!");
     }
-    // ===========================================
 
-
-
-    //            ================= Loop while execution===================
-    private static void runningApp(){
+    private static void runningApp() {
         System.out.println("Running application..");
-        while (isRunning){
+        while (isRunning) {
             displayMainMenu();
-            switch(getChoice(1, 3)) {
+            switch (getChoice(1, 3)) {
                 case 1:
                     adminLogin();
                     break;
-                case 2: 
+                case 2:
                     userMenu();
                     break;
-                case 3: 
+                case 3:
                     exit();
                     break;
                 default:
@@ -62,38 +46,16 @@ public class Main {
             }
         }
     }
-    // ======================================================================
 
-    //           =================   Main Menu =================
-    
-    private static void displayMainMenu(){
-        showWelcomeBanner();
-
-        System.out.println();
-        System.out.println();
-        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        System.out.println("┃        ⚔ QUIZ GAUNTLET: THE CHALLENGE ⚔          ┃");
-        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃  ➤ [1] Admin                                     ┃");
-        System.out.println("┃  ➤ [2] User                                      ┃");
-        System.out.println("┃  ➤ [3] Exit                                      ┃");
-        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-    }
-    // =============================================================================
-
-
-
-    //           ==================== Global choice getting :  =====================
-    private static int getChoice(int min, int max){
+    private static int getChoice(int min, int max) {
         int choice = 0;
         boolean valid = false;
 
-        while (!valid){
+        while (!valid) {
             try {
                 if (!input.hasNextInt()) {
                     if (!input.hasNextLine()) {
                         isRunning = false;
-                        input.close();
                         return min;
                     }
                     input.nextLine();
@@ -105,7 +67,7 @@ public class Main {
                 choice = input.nextInt();
                 input.nextLine();
 
-                if ((choice >= min) && (choice <= max)){
+                if ((choice >= min) && (choice <= max)) {
                     valid = true;
                 } else {
                     System.out.println("Choice must be " + min + "-" + max);
@@ -117,87 +79,159 @@ public class Main {
         }
         return choice;
     }
-    // ======================================================
 
-
-    //           ==================== authentication for admin ====================
-
-    private static void adminLogin(){
-        System.out.println("Log in as Admin");
-        System.out.print("Please enter the password: ");
-        String enteredPassword = input.nextLine(); 
+    private static void adminLogin() {
+        ui.displayMessage("Log in as Admin");
+        String enteredPassword = ui.getPasswordInput();
 
         if (enteredPassword.equals(PASSWORD)) {
-            System.out.println("Login Successful!");
+            ui.displaySuccess("Login Successful!");
             adminMenu();
         } else {
-            System.out.println("Incorrect Password!");
+            ui.displayError("Incorrect Password!");
         }
     }
 
-    //                 ==================== Admin Menu==================
+    private static void displayMainMenu() {
+        showWelcomeBanner();
+        System.out.println();
+        System.out.println();
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃        ⚔ QUIZ GAUNTLET: THE CHALLENGE ⚔          ┃");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃  ➤ [1] Admin                                     ┃");
+        System.out.println("┃  ➤ [2] User                                      ┃");
+        System.out.println("┃  ➤ [3] Exit                                      ┃");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+    }
 
-    private static void adminMenu(){
+    private static void adminMenu() {
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃                ⚙ ADMIN MENU ⚙                    ┃");
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        System.out.println("┃  ➤ [1] Create Question                           ┃");
-        System.out.println("┃  ➤ [2] Review Question                           ┃");
-        System.out.println("┃  ➤ [3] Update Question                           ┃");
-        System.out.println("┃  ➤ [4] Delete Question                           ┃");
-        System.out.println("┃  ➤ [5] Back                                      ┃");
+        System.out.println("┃  ➤ [1] View Questions                            ┃");
+        System.out.println("┃  ➤ [2] View Statistics                           ┃");
+        System.out.println("┃  ➤ [3] Back                                      ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        getChoice(1,5);
-        System.out.println();
-            
+        int choice = getChoice(1, 3);
+        switch (choice) {
+            case 1:
+                ui.displayAllQuestions(questionBank.getAllQuestions());
+                break;
+            case 2:
+                showStatistics();
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
     }
 
-    //               ==================  User Menu=================
-
-    private static void userMenu(){
+    private static void userMenu() {
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
         System.out.println("┃  ➤ [1] Play by Categories                        ┃");
         System.out.println("┃  ➤ [2] Play by Random                            ┃");
-        System.out.println("┃  ➤ [3] View Statistics                           ┃");
-        System.out.println("┃  ➤ [4] Back                                      ┃");    
+        System.out.println("┃  ➤ [3] How to Play                               ┃");
+        System.out.println("┃  ➤ [4] View Statistics                           ┃");
+        System.out.println("┃  ➤ [5] Back                                      ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-        getChoice(1,5);
+        int choice = getChoice(1, 5);
+        switch (choice) {
+            case 1:
+                startCategoryGame();
+                break;
+            case 2:
+                startGameFlow(null);
+                break;
+            case 3:
+                ui.displayHowToPlay();
+                break;
+            case 4:
+                showStatistics();
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
     }
 
+    private static void startCategoryGame() {
+        ui.displayCategoryMenu();
+        int choice = getChoice(0, 6);
+        if (choice == 0) {
+            return;
+        }
 
-    //             ========= Exit confirmation and then break the whole loop ==========
+        String category = null;
+        switch (choice) {
+            case 1:
+                category = "Science";
+                break;
+            case 2:
+                category = "History";
+                break;
+            case 3:
+                category = "Math";
+                break;
+            case 4:
+                category = "Geography";
+                break;
+            case 5:
+                category = "Entertainment";
+                break;
+            case 6:
+                category = null;
+                break;
+            default:
+                return;
+        }
 
-    private static void exit(){
+        startGameFlow(category);
+    }
+
+    private static void startGameFlow(String category) {
+        GameEngine engine = new GameEngine(questionBank, ui, category);
+        engine.startGame();
+    }
+
+    private static void showStatistics() {
+        String[] categories = {"Science", "History", "Math", "Geography", "Entertainment"};
+        int[] counts = new int[categories.length];
+        for (int i = 0; i < categories.length; i++) {
+            counts[i] = questionBank.getQuestionsByCategory(categories[i]).size();
+        }
+        ui.displayStatisticsTable(categories, counts);
+    }
+
+    private static void exit() {
         System.out.print("Are you sure you want to leave? (Y/N): ");
         if (!input.hasNextLine()) {
             isRunning = false;
-            input.close();
             System.out.println("No further input. Exiting.");
             return;
         }
 
         String answer = input.nextLine().trim();
-        if (answer.equalsIgnoreCase("Y")){
+        if (answer.equalsIgnoreCase("Y")) {
             isRunning = false;
-            input.close();
         } else {
             System.out.println("Return to the main menu.");
         }
     }
 
-    //              ========clear heading terminal prompt to get space when start execution ==================
-
     private static void clearScreen() {
-    System.out.print("\033[H\033[2J");
-    System.out.flush();
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+        System.out.flush();
     }
 
-    //                  ======  Loading effect=======
-
-    private static void showLoading(String message){
-        try{
+    private static void showLoading(String message) {
+        try {
             System.out.println("Initializing");
             System.out.println(".");
             Thread.sleep(500);
@@ -207,15 +241,12 @@ public class Main {
             Thread.sleep(500);
             System.out.println(".");
             System.out.println();
-        }
-        catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println("Loading interrupted");
         }
     }
-    
-    //                    ========= Welcome banner=========
 
-    private static void showWelcomeBanner(){
+    private static void showWelcomeBanner() {
         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
         System.out.println("┃               ★ QUIZ GAUNTLET ★                  ┃");
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
@@ -230,7 +261,6 @@ public class Main {
         System.out.println("┃  • Answer questions and earn your score.         ┃");
         System.out.println("┃  • Can you conquer the Quiz Gauntlet?            ┃");
         System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
-
     }
 }
 

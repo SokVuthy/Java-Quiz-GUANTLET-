@@ -8,7 +8,11 @@ public class UserInterface {
 
     // ── Constructor ───────────────────────────────────────────
     public UserInterface() {
-        scanner = new Scanner(System.in);
+        this(new Scanner(System.in));
+    }
+
+    public UserInterface(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     // ==========================================================
@@ -19,7 +23,7 @@ public class UserInterface {
     public void displayMainMenu() {
         printBox(
             "  ╔══════════════════════════════════════╗",
-            "  ║     🎮   QUIZ GAUNTLET   🎮           ║",
+            "  ║        QUIZ GAUNTLET                 ║",
             "  ║      20-Question Challenge Game       ║",
             "  ╠══════════════════════════════════════╣",
             "  ║  [1]  Play Game                      ║",
@@ -35,7 +39,7 @@ public class UserInterface {
     public void displayAdminMenu() {
         printBox(
             "  ╔══════════════════════════════════════╗",
-            "  ║         🔐  ADMIN PANEL              ║",
+            "  ║           ADMIN PANEL                ║",
             "  ╠══════════════════════════════════════╣",
             "  ║  [1]  View All Questions             ║",
             "  ║  [2]  Add New Question               ║",
@@ -52,13 +56,15 @@ public class UserInterface {
     public void displayCategoryMenu() {
         printBox(
             "  ╔══════════════════════════════════════╗",
-            "  ║       📂  SELECT CATEGORY            ║",
+            "  ║          SELECT CATEGORY             ║",
             "  ╠══════════════════════════════════════╣",
-            "  ║  [1]  Mathematics  🔢                ║",
-            "  ║  [2]  World Flags  🌍                ║",
-            "  ║  [3]  FIFA World Cup  ⚽              ║",
-            "  ║  [4]  Mixed (All Categories)         ║",
-            "  ║  [0]  Back                           ║",
+            "  ║  [1]  Science                       ║",
+            "  ║  [2]  History                       ║",
+            "  ║  [3]  Math                          ║",
+            "  ║  [4]  Geography                     ║",
+            "  ║  [5]  Entertainment                 ║",
+            "  ║  [6]  Mixed (All Categories)        ║",
+            "  ║  [0]  Back                          ║",
             "  ╚══════════════════════════════════════╝"
         );
         System.out.print("  👉  Enter your choice: ");
@@ -68,7 +74,7 @@ public class UserInterface {
     public void displayUserMenu() {
         printBox(
             "  ╔══════════════════════════════════════╗",
-            "  ║          👤  USER MENU               ║",
+            "  ║             USER MENU                ║",
             "  ╠══════════════════════════════════════╣",
             "  ║  [1]  Start Quiz                     ║",
             "  ║  [2]  How to Play                    ║",
@@ -110,7 +116,7 @@ public class UserInterface {
         System.out.printf("  │  [D]  %-37s│%n", q.getOptionD());
 
         System.out.println("  └──────────────────────────────────────────┘");
-        System.out.print("  👉  Your answer (A/B/C/D  or  Q to quit): ");
+        System.out.print(" Your answer (A/B/C/D  or  Q to quit): ");
     }
 
     // Method 6 – Show feedback after the player answers
@@ -119,16 +125,16 @@ public class UserInterface {
         System.out.println();
         if (isCorrect) {
             System.out.println("  ╔══════════════════════════════════════╗");
-            System.out.println("  ║  ✅  CORRECT!  +10 points  🎉        ║");
+            System.out.println("  ║         CORRECT!  +10 points         ║");
             System.out.println("  ║  This question is removed from deck. ║");
             System.out.println("  ╚══════════════════════════════════════╝");
         } else {
             char correctLetter = q.getCorrectAnswer();
             String correctText = q.getOption(correctLetter);
             System.out.println("  ╔══════════════════════════════════════╗");
-            System.out.println("  ║  ❌  WRONG!  No points deducted.    ║");
-            System.out.printf ("  ║  Correct: [%c] %-23s║%n",
-                               correctLetter, correctText);
+            System.out.println("  ║       WRONG!  No points deducted.    ║");
+            System.out.printf ("  ║         Correct: [%c] %-23s║%n",
+                            correctLetter, correctText);
             System.out.println("  ║  This question will reappear later. ║");
             System.out.println("  ╚══════════════════════════════════════╝");
         }
@@ -142,7 +148,7 @@ public class UserInterface {
         for (int i = 0; i < 20; i++) bar.append(i < filled ? "█" : "░");
         bar.append("]");
         System.out.println();
-        System.out.printf("  📊  Progress: %s  %d / %d correct%n",
+        System.out.printf("   Progress: %s  %d / %d correct%n",
                            bar.toString(), correct, total);
     }
 
@@ -155,11 +161,11 @@ public class UserInterface {
         System.out.println();
         System.out.println("  ╔════════════════════════════════════════════╗");
         System.out.println("  ║                                            ║");
-        System.out.println("  ║   🏆   CONGRATULATIONS!  YOU WON!   🏆    ║");
+        System.out.println("  ║      CONGRATULATIONS!  YOU WON!            ║");
         System.out.println("  ║                                            ║");
         System.out.println("  ╠════════════════════════════════════════════╣");
-        System.out.printf ("  ║   ✅  All %2d questions answered correctly  ║%n", totalQuestions);
-        System.out.printf ("  ║   🌟  Final Score : %-5d / %-5d points   ║%n",
+        System.out.printf ("  ║      All %2d questions answered correctly  ║%n", totalQuestions);
+        System.out.printf ("  ║     Final Score : %-5d / %-5d points   ║%n",
                             score, totalQuestions * 10);
         System.out.println("  ║                                            ║");
         System.out.println("  ╚════════════════════════════════════════════╝");
@@ -171,13 +177,13 @@ public class UserInterface {
         System.out.println();
         System.out.println("  ╔════════════════════════════════════════════╗");
         System.out.println("  ║                                            ║");
-        System.out.println("  ║           💀   GAME OVER   💀              ║");
+        System.out.println("  ║               GAME OVER                    ║");
         System.out.println("  ║                                            ║");
         System.out.println("  ╠════════════════════════════════════════════╣");
-        System.out.printf ("  ║   ✅  Correct answers  : %-3d               ║%n", correctCount);
-        System.out.printf ("  ║   ❌  Still remaining  : %-3d               ║%n",
+        System.out.printf ("  ║      Correct answers  : %-3d               ║%n", correctCount);
+        System.out.printf ("  ║      Still remaining  : %-3d               ║%n",
                             totalQuestions - correctCount);
-        System.out.printf ("  ║   🌟  Final Score      : %-5d points      ║%n", score);
+        System.out.printf ("  ║        Final Score      : %-5d points      ║%n", score);
         System.out.println("  ║                                            ║");
         System.out.println("  ╚════════════════════════════════════════════╝");
         pauseForUser();
@@ -191,7 +197,7 @@ public class UserInterface {
     public void displayStatisticsTable(String[] categories, int[] questionCounts) {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════════╗");
-        System.out.println("  ║         📊  QUESTION BANK STATISTICS         ║");
+        System.out.println("  ║             QUESTION BANK STATISTICS         ║");
         System.out.println("  ╠═══════════════════════╦══════════════════════╣");
         System.out.println("  ║  Category             ║  Questions Available ║");
         System.out.println("  ╠═══════════════════════╬══════════════════════╣");
@@ -260,15 +266,22 @@ public class UserInterface {
     // Returns char to match Question's correctAnswer field type
     public char getAnswerInput() {
         while (true) {
-            String raw = scanner.nextLine().trim().toUpperCase();
-            if (raw.length() == 1) {
-                char c = raw.charAt(0);
-                if (c == 'A' || c == 'B' || c == 'C' || c == 'D' || c == 'Q') {
-                    return c;
+            try {
+                if (!scanner.hasNextLine()) {
+                    return 'Q';
                 }
+                String raw = scanner.nextLine().trim().toUpperCase();
+                if (raw.length() == 1) {
+                    char c = raw.charAt(0);
+                    if (c == 'A' || c == 'B' || c == 'C' || c == 'D' || c == 'Q') {
+                        return c;
+                    }
+                }
+            } catch (IllegalStateException e) {
+                return 'Q';
             }
             displayError("Invalid input. Please enter A, B, C, D, or Q to quit.");
-            System.out.print("  👉  Your answer (A/B/C/D  or  Q to quit): ");
+            System.out.print("  Your answer (A/B/C/D  or  Q to quit): ");
         }
     }
 
@@ -290,7 +303,7 @@ public class UserInterface {
 
     // Method 16 – Get admin password input
     public String getPasswordInput() {
-        System.out.print("  🔑  Enter admin password: ");
+        System.out.print("  Enter admin password: ");
         return scanner.nextLine().trim();
     }
 
@@ -300,17 +313,17 @@ public class UserInterface {
 
     // Method 17 – Display a general informational message
     public void displayMessage(String message) {
-        System.out.println("  ℹ️   " + message);
+        System.out.println("  Info: " + message);
     }
 
     // Method 18 – Display an error message
     public void displayError(String message) {
-        System.out.println("  ⚠️   ERROR: " + message);
+        System.out.println("  ERROR: " + message);
     }
 
     // Method 19 – Display a success message
     public void displaySuccess(String message) {
-        System.out.println("  ✅  " + message);
+        System.out.println("  " + message);
     }
 
     // Method 20 – Display a visual divider line
@@ -322,7 +335,7 @@ public class UserInterface {
     public void displayHowToPlay() {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════╗");
-        System.out.println("  ║           📖  HOW TO PLAY                ║");
+        System.out.println("  ║                HOW TO PLAY              ║");
         System.out.println("  ╠══════════════════════════════════════════╣");
         System.out.println("  ║  1. 20 questions are randomly chosen     ║");
         System.out.println("  ║     from a pool of 100+ questions.       ║");
@@ -348,7 +361,7 @@ public class UserInterface {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════╗");
         System.out.println("  ║                                          ║");
-        System.out.println("  ║   🎮   WELCOME TO QUIZ GAUNTLET   🎮     ║");
+        System.out.println("  ║      WELCOME TO QUIZ GAUNTLET         ║");
         System.out.println("  ║        20-Question Challenge Game        ║");
         System.out.println("  ║                                          ║");
         System.out.println("  ║      ITM 201 – Java Programming I        ║");
@@ -361,7 +374,7 @@ public class UserInterface {
     public void displayExitMessage() {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════╗");
-        System.out.println("  ║  👋  Thanks for playing Quiz Gauntlet!   ║");
+        System.out.println("  ║  Thanks for playing Quiz Gauntlet!    ║");
         System.out.println("  ║       See you next time!  🌟              ║");
         System.out.println("  ╚══════════════════════════════════════════╝");
         System.out.println();
@@ -374,7 +387,13 @@ public class UserInterface {
     // Pause and wait for the user to press Enter before continuing
     private void pauseForUser() {
         System.out.print("\n  Press Enter to continue...");
-        scanner.nextLine();
+        try {
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+        } catch (IllegalStateException e) {
+            System.out.println();
+        }
     }
 
     // Print a pre-built set of box lines

@@ -9,7 +9,15 @@ public class GameEngine {
     private int correctCount = 0;
 
     public GameEngine(QuestionBank bank, UserInterface ui) {
-        this.deck = bank.getRandomQuestions(20);
+        this(bank, ui, null);
+    }
+
+    public GameEngine(QuestionBank bank, UserInterface ui, String category) {
+        if (category == null || category.isBlank()) {
+            this.deck = bank.getRandomQuestions(20);
+        } else {
+            this.deck = bank.getRandomQuestionsByCategory(category, 20);
+        }
         this.totalQuestions = this.deck.size();
         this.ui = ui;
     }
