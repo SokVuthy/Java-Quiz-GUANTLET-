@@ -5,9 +5,12 @@ public class GameEngine {
     private UserInterface ui;
     private int score = 0;
     private int lives = 3;
+    private int totalQuestions;
+    private int correctCount = 0;
 
     public GameEngine(QuestionBank bank, UserInterface ui) {
         this.deck = bank.getRandomQuestions(20);
+        this.totalQuestions = this.deck.size();
         this.ui = ui;
     }
 
@@ -17,16 +20,21 @@ public class GameEngine {
         while (!deck.isEmpty() && lives > 0) {
             Question q = deck.get(current);
 
-            ui.displayQuestion(q, score, lives, deck.size());
-            int userAnswer = ui.getUserAnswer();
+            ui.displayQuestion(q, current + 1, deck.size(), score);
+            char userAnswer = ui.getAnswerInput();
+
+            if (userAnswer == 'Q') {
+                break;
+            }
 
             if (userAnswer == q.getCorrectAnswer()) {
                 score += 10;
+                correctCount++;
                 deck.remove(current);
-                ui.showCorrectFeedback();
+                ui.displayAnswerFeedback(true, q);
             } else {
                 lives--;
-                ui.showWrongFeedback(q);
+                ui.displayAnswerFeedback(false, q);
                 current++;
             }
 
@@ -40,9 +48,9 @@ public class GameEngine {
 
     private void endGame() {
         if (deck.isEmpty()) {
-            ui.showWinScreen(score);
+            ui.displayWinScreen(score, totalQuestions);
         } else {
-            ui.showLoseScreen(score);
+            ui.displayGameOverScreen(score, correctCount, totalQuestions);
         }
     }
 

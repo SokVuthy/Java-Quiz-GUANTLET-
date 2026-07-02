@@ -33,3 +33,5 @@ Thumbs.db
 *.tmp
 *.swp
 desktop.ini
+*.vscode
+*.json

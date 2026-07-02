@@ -90,6 +90,17 @@ public class Main {
 
         while (!valid){
             try {
+                if (!input.hasNextInt()) {
+                    if (!input.hasNextLine()) {
+                        isRunning = false;
+                        input.close();
+                        return min;
+                    }
+                    input.nextLine();
+                    System.out.println("Error: Input must be a number!!!!");
+                    continue;
+                }
+
                 System.out.print("Choice: ");
                 choice = input.nextInt();
                 input.nextLine();
@@ -159,13 +170,21 @@ public class Main {
     //             ========= Exit confirmation and then break the whole loop ==========
 
     private static void exit(){
-        System.out.println("Are you sure you want to leave? (Y/N): ");
-        String answer = input.next();
+        System.out.print("Are you sure you want to leave? (Y/N): ");
+        if (!input.hasNextLine()) {
+            isRunning = false;
+            input.close();
+            System.out.println("No further input. Exiting.");
+            return;
+        }
+
+        String answer = input.nextLine().trim();
         if (answer.equalsIgnoreCase("Y")){
             isRunning = false;
-            input.close(); 
+            input.close();
+        } else {
+            System.out.println("Return to the main menu.");
         }
-        
     }
 
     //              ========clear heading terminal prompt to get space when start execution ==================
