@@ -112,14 +112,14 @@ public class Main {
                     ui.displayAllQuestions(questionBank.getAllQuestions());
                     break;
                 case 2:
-                    questionBank.addQuestion(null);;        // need fixing //
+                    questionBank.addQuestionFromInput(input);
                     break;
-                case 3:
+                case 3: {
                     System.out.println("Which quesetion do you want to update ?(ID)");
                     int id = input.nextInt();
                     input.nextLine();
                     Question existQuestion = questionBank.getQuestionById(id);
-                    if (existQuestion==null){
+                    if (existQuestion == null) {
                         System.out.println("Question Not Found!");
                         break;
                     }
@@ -141,6 +141,20 @@ public class Main {
                     existQuestion.updateFields(text, optA, optB, optC, optD, correct, category);
                     System.out.println("[OK] Question #" + id + " updated successfully.");
                     break;
+            }
+                case 4: {
+                    System.out.println("Which question do you want to Delete ?(ID)");
+                    int id = input.nextInt();
+                    input.nextLine();
+                    Question existQuestion = questionBank.getQuestionById(id);
+                    if (existQuestion == null) {
+                        System.out.println("Question Not Found!");
+                        break;
+                    } else {
+                        questionBank.deleteQuestion(id);
+                    }
+                    break;
+                }
                     
                 default:
                     inAdminMenu = false;

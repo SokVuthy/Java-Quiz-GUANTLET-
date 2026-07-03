@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class QuestionBank {
 
@@ -17,6 +18,42 @@ public class QuestionBank {
     public void addQuestion(Question q) {
         questions.add(q);
         System.out.println("[ADDED] " + q);
+    }
+
+    public void addQuestionFromInput(Scanner input) {
+        System.out.println("Enter the question text:");
+        String questionText = input.nextLine();
+
+        System.out.println("Enter option A:");
+        String optionA = input.nextLine();
+
+        System.out.println("Enter option B:");
+        String optionB = input.nextLine();
+
+        System.out.println("Enter option C:");
+        String optionC = input.nextLine();
+
+        System.out.println("Enter option D:");
+        String optionD = input.nextLine();
+
+        char correctAnswer = getValidatedAnswer(input);
+
+        System.out.println("Enter category (Science/History/Math/Geography/Entertainment):");
+        String category = input.nextLine();
+
+        Question newQuestion = new Question(questionText, optionA, optionB, optionC, optionD, correctAnswer, category);
+        addQuestion(newQuestion);
+    }
+
+    private char getValidatedAnswer(Scanner input) {
+        while (true) {
+            System.out.println("Enter the correct answer (A/B/C/D):");
+            String answerInput = input.nextLine().trim().toUpperCase();
+            if (answerInput.length() == 1 && "ABCD".contains(answerInput)) {
+                return answerInput.charAt(0);
+            }
+            System.out.println("Invalid input. Please enter A, B, C, or D.");
+        }
     }
 
     // =========================================================================

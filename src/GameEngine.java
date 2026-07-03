@@ -5,7 +5,7 @@ public class GameEngine {
     private UserInterface ui;
     private int score = 0;
     private int lives = 3;
-    private int totalQuestions;
+    private final int totalQuestions;
     private int correctCount = 0;
 
     public GameEngine(QuestionBank bank, UserInterface ui) {
