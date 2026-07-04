@@ -116,16 +116,14 @@ public class QuestionBank {
     // DELETE
     // =========================================================================
 
-    public boolean deleteQuestion(int id) {
+    public void deleteQuestion(int id) {
         for (int i = 0; i < questions.size(); i++) {
             if (questions.get(i).getID() == id) {
                 Question removed = questions.remove(i);
                 System.out.println("[DELETED] " + removed);
-                return true;
             }
         }
         System.out.println("[ERROR] Question #" + id + " not found.");
-        return false;
     }
 
     // =========================================================================
@@ -133,7 +131,7 @@ public class QuestionBank {
     // =========================================================================
 
     public void printCategoryStats() {
-        String[] categories = {"Science", "History", "Math", "Geography", "Entertainment", "Soccer"};
+        String[] categories = {"Science", "History", "Math", "Geography", "Entertainment"};
         System.out.println("\n===== CATEGORY STATISTICS =====");
         System.out.printf("%-20s %s%n", "Category", "# of Questions");
         System.out.println("----------------------------------");

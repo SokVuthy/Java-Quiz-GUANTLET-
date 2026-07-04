@@ -3,16 +3,18 @@ import java.util.Scanner;
 
 public class UserInterface {
 
+    private static GameEngine gameEngine;
+
     // ── Scanner for all user input ────────────────────────────
-    private Scanner scanner;
+    private final Scanner scanner;
 
     // ── Constructor ───────────────────────────────────────────
-    public UserInterface() {
-        this(new Scanner(System.in));
-    }
-
     public UserInterface(Scanner scanner) {
         this.scanner = scanner;
+    }
+
+    public void setGameEngine(GameEngine gameEngine) {
+        UserInterface.gameEngine = gameEngine;
     }
 
     // ==========================================================
@@ -45,6 +47,7 @@ public class UserInterface {
             "  ║  [3]  Update Question                ║",
             "  ║  [4]  Delete Question                ║",
             "  ║  [5]  View Category Statistics       ║",
+            "  ║  [6]  View Questions by Category     ║",
             "  ║  [0]  Back to Main Menu              ║",
             "  ╚══════════════════════════════════════╝"
         );
@@ -99,7 +102,7 @@ public class UserInterface {
         }
         bar.append("]");
         System.out.printf("  ║  Progress: %s  %d / %d correct            ║%n", 
-                        bar.toString(), correct, total);
+                        bar, correct, total);
         System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
         String qText = q.getQuestionText();
         if (qText.length() <= 50) {
@@ -123,20 +126,26 @@ public class UserInterface {
     // Uses: q.getCorrectAnswer() returns char, q.getOption(char) returns full text
     public void displayAnswerFeedback(boolean isCorrect, Question q) {
         System.out.println();
+        int score = (gameEngine != null) ? gameEngine.getScore() : 0;
+        int lives = (gameEngine != null) ? gameEngine.getLives() : 0;
+
         if (isCorrect) {
-            System.out.println("  ╔══════════════════════════════════════╗");
-            System.out.println("  ║         CORRECT!  +10 points         ║");
-            System.out.println("  ║  This question is removed from deck. ║");
-            System.out.println("  ╚══════════════════════════════════════╝");
+            System.out.println("  ╔═════════════════════════════════════════════╗");
+            System.out.println("  ║         CORRECT!  +10 points                ║");
+            System.out.println("  ║  This question is removed from deck.        ║");
+            System.out.println("  ║ Current Score: " + score + "║");
+            System.out.println("  ╚═════════════════════════════════════════════╝");
         } else {
             char correctLetter = q.getCorrectAnswer();
             String correctText = q.getOption(correctLetter);
-            System.out.println("  ╔══════════════════════════════════════╗");
-            System.out.println("  ║       WRONG!  No points deducted.    ║");
+            System.out.println("  ╔═════════════════════════════════════════════╗");
+            System.out.println("  ║       WRONG!  No points deducted.           ║");
             System.out.printf ("  ║         Correct: [%c] %-23s║%n",
                             correctLetter, correctText);
-            System.out.println("  ║  This question will reappear later. ║");
-            System.out.println("  ╚══════════════════════════════════════╝");
+            System.out.println("  ║ Current Score: " + score + "║");
+            System.out.println("  ║ Attempt Left: " + lives +  "║");
+            System.out.println("  ║  This question will reappear later.         ║");
+            System.out.println("  ╚═════════════════════════════════════════════╝");
         }
         pauseForUser();
     }
@@ -149,7 +158,7 @@ public class UserInterface {
         bar.append("]");
         System.out.println();
         System.out.printf("   Progress: %s  %d / %d correct%n",
-                           bar.toString(), correct, total);
+                           bar, correct, total);
     }
 
     // ==========================================================
@@ -230,15 +239,14 @@ public class UserInterface {
         System.out.println("  " + "─".repeat(68));
 
         // Loop through all questions (READ operation)
-        for (int i = 0; i < questions.size(); i++) {
-            Question q = questions.get(i);
+        for (Question q : questions) {
             String qText = q.getQuestionText();
             if (qText.length() > 36) qText = qText.substring(0, 33) + "...";
             System.out.printf("  %-5d %-38s %-16s %-6c%n",
-                              q.getID(),
-                              qText,
-                              q.getCategories(),
-                              q.getCorrectAnswer());
+                    q.getID(),
+                    qText,
+                    q.getCategories(),
+                    q.getCorrectAnswer());
         }
 
         System.out.println("  " + "─".repeat(68));

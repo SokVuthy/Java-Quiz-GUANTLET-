@@ -1,16 +1,12 @@
 import java.util.ArrayList;
 
 public class GameEngine {
-    private ArrayList<Question> deck;
-    private UserInterface ui;
+    private final ArrayList<Question> deck;
+    private final UserInterface ui;
     private int score = 0;
     private int lives = 3;
     private final int totalQuestions;
     private int correctCount = 0;
-
-    public GameEngine(QuestionBank bank, UserInterface ui) {
-        this(bank, ui, null);
-    }
 
     public GameEngine(QuestionBank bank, UserInterface ui, String category) {
         if (category == null || category.isBlank()) {
@@ -20,6 +16,7 @@ public class GameEngine {
         }
         this.totalQuestions = this.deck.size();
         this.ui = ui;
+        ui.setGameEngine(this);
     }
 
     public void startGame() {
@@ -45,6 +42,8 @@ public class GameEngine {
                 ui.displayAnswerFeedback(false, q);
                 current++;
             }
+
+            ui.displayProgress(correctCount, totalQuestions);
 
             if (current >= deck.size()) {
                 current = 0;
