@@ -1,7 +1,3 @@
-
-import java.util.Scanner;
-import java.util.InputMismatchException;
-public class Main{
 private static final Scanner input = new Scanner(System.in);
 private static final String PASSWORD = "admin1213";
 private static boolean isRunning = true;
@@ -9,7 +5,7 @@ private static boolean isRunning = true;
 private static QuestionBank questionBank;
 private static UserInterface ui;
 
-public static void main(String[] args) {
+void main() {
     clearScreen();
     initializeApp();
     while (isRunning) {
@@ -23,11 +19,11 @@ private static void initializeApp() {
     questionBank = new QuestionBank();
     ui = new UserInterface(input);
     ui.displayWelcomeBanner();
-    IO.println("Ready!!");
+    System.out.println("Ready!!");
 }
 
 private static void runningApp() {
-    IO.println("Running application..");
+    System.out.println("Running application..");
     while (isRunning) {
         displayMainMenu();
         switch (getChoice(0, 3)) {
@@ -44,7 +40,7 @@ private static void runningApp() {
                 exit();
                 break;
             default:
-                IO.println("Choice must be 0-3");
+                System.out.println("Choice must be 0-3");
                 break;
         }
     }
@@ -56,14 +52,14 @@ private static int getChoice(int min, int max) {
 
     while (!valid) {
         try {
-            IO.print("Choice: ");
+            System.out.print("Choice: ");
             if (!input.hasNextInt()) {
                 if (!input.hasNextLine()) {
                     isRunning = false;
                     return min;
                 }
                 input.nextLine();
-                IO.println("Error: Input must be a number!!!!");
+                System.out.println("Error: Input must be a number!!!!");
                 continue;
             }
 
@@ -73,10 +69,10 @@ private static int getChoice(int min, int max) {
             if ((choice >= min) && (choice <= max)) {
                 valid = true;
             } else {
-                IO.println("Choice must be " + min + "-" + max);
+                System.out.println("Choice must be " + min + "-" + max);
             }
         } catch (InputMismatchException e) {
-            IO.println("Error: Input must be a number!!!!");
+            System.out.println("Error: Input must be a number!!!!");
             input.nextLine();
         }
     }
@@ -116,10 +112,10 @@ private static void adminMenu() {
                 int id = getIntInput("Which question do you want to update? (ID): ");
                 Question existQuestion = questionBank.getQuestionById(id);
                 if (existQuestion == null) {
-                    IO.println("Question Not Found!");
+                    System.out.println("Question Not Found!");
                     break;
                 }
-                IO.println("\nEnter new question details:");
+                System.out.println("\nEnter new question details:");
                 String text = ui.getStringInput("Question text: ");
                 String optA = ui.getStringInput("Option A: ");
                 String optB = ui.getStringInput("Option B: ");
@@ -128,14 +124,14 @@ private static void adminMenu() {
                 char correct = ui.getCharInput("Correct answer (A/B/C/D): ");
                 String category = ui.getStringInput("Category: ");
                 existQuestion.updateFields(text, optA, optB, optC, optD, correct, category);
-                IO.println("[OK] Question #" + id + " updated successfully.");
+                System.out.println("[OK] Question #" + id + " updated successfully.");
                 break;
             }
             case 4: {
                 int id = getIntInput("Which question do you want to delete? (ID): ");
                 Question existQuestion = questionBank.getQuestionById(id);
                 if (existQuestion == null) {
-                    IO.println("Question Not Found!");
+                    System.out.println("Question Not Found!");
                     break;
                 }
                 questionBank.deleteQuestion(id);
@@ -161,7 +157,7 @@ private static void adminMenu() {
 private static int getIntInput(String prompt) {
     while (true) {
         try {
-            IO.print(prompt);
+            System.out.print(prompt);
             String raw = input.nextLine().trim();
             return Integer.parseInt(raw);
         } catch (NumberFormatException e) {
@@ -174,15 +170,15 @@ private static void userMenu() {
     boolean inUserMenu = true;
 
     while (inUserMenu) {
-        IO.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-        IO.println("┃                 🎮 USER MENU 🎮                  ┃");
-        IO.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-        IO.println("┃  ➤ [1] Play by Categories                        ┃");
-        IO.println("┃  ➤ [2] Play by Random                            ┃");
-        IO.println("┃  ➤ [3] How to Play                               ┃");
-        IO.println("┃  ➤ [4] View Statistics                           ┃");
-        IO.println("┃  ➤ [5] Back                                      ┃");
-        IO.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
+        System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+        System.out.println("┃  ➤ [1] Play by Categories                        ┃");
+        System.out.println("┃  ➤ [2] Play by Random                            ┃");
+        System.out.println("┃  ➤ [3] How to Play                               ┃");
+        System.out.println("┃  ➤ [4] View Statistics                           ┃");
+        System.out.println("┃  ➤ [5] Back                                      ┃");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
         int choice = getChoice(1, 5);
         switch (choice) {
             case 1:
@@ -257,10 +253,10 @@ private static void showStatistics() {
 }
 
 private static void exit() {
-    IO.print("Are you sure you want to leave? (Y/N): ");
+    System.out.print("Are you sure you want to leave? (Y/N): ");
     if (!input.hasNextLine()) {
         isRunning = false;
-        IO.println("No further input. Exiting.");
+        System.out.println("No further input. Exiting.");
         return;
     }
 
@@ -268,30 +264,29 @@ private static void exit() {
     if (answer.equalsIgnoreCase("Y")) {
         isRunning = false;
     } else {
-        IO.println("Return to the main menu.");
+        System.out.println("Return to the main menu.");
     }
 }
 
 private static void clearScreen() {
     for (int i = 0; i < 50; i++) {
-        IO.println();
+        System.out.println();
     }
     System.out.flush();
 }
 
 private static void showLoading() {
     try {
-        IO.println("Initializing");
-        IO.println(".");
+        System.out.println("Initializing");
+        System.out.println(".");
         Thread.sleep(500);
-        IO.println(".");
+        System.out.println(".");
         Thread.sleep(500);
-        IO.println(".");
+        System.out.println(".");
         Thread.sleep(500);
-        IO.println(".");
-        IO.println();
+        System.out.println(".");
+        System.out.println();
     } catch (InterruptedException e) {
-        IO.println("Loading interrupted");
+        System.out.println("Loading interrupted");
     }
-}
 }

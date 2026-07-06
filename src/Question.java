@@ -79,10 +79,6 @@ public class Question {
         }
     }
 
-    public boolean isCorrect(char answer){
-        return answer == correctAnswer;
-    }
-
     public void display(){
         System.out.println("📝 " + questionText);
         System.out.println("A. " + optionA);

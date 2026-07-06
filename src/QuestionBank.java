@@ -148,18 +148,6 @@ public class QuestionBank {
     // DISPLAY
     // =========================================================================
 
-    public void displayAllQuestions() {
-        if (questions.isEmpty()) {
-            System.out.println("[EMPTY] No questions in the bank.");
-            return;
-        }
-        System.out.println("\n===== ALL QUESTIONS (" + questions.size() + ") =====\n");
-        for (Question q : questions) {
-            q.display();
-            System.out.println("-----------------------------");
-        }
-    }
-
     public void displayQuestionsByCategory(String category) {
         ArrayList<Question> filtered = getQuestionsByCategory(category);
         if (filtered.isEmpty()) {

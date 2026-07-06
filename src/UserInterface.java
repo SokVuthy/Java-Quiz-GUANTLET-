@@ -150,17 +150,6 @@ public class UserInterface {
         pauseForUser();
     }
 
-    // Method 7 – Display a live progress bar
-    public void displayProgress(int correct, int total) {
-        int filled = (total > 0) ? (int)((correct / (double) total) * 20) : 0;
-        StringBuilder bar = new StringBuilder("[");
-        for (int i = 0; i < 20; i++) bar.append(i < filled ? "█" : "░");
-        bar.append("]");
-        System.out.println();
-        System.out.printf("   Progress: %s  %d / %d correct%n",
-                           bar, correct, total);
-    }
-
     // ==========================================================
     //  WIN / GAME OVER SCREENS
     // ==========================================================
@@ -254,21 +243,6 @@ public class UserInterface {
         pauseForUser();
     }
 
-    // ==========================================================
-    //  INPUT METHODS
-    // ==========================================================
-
-    // Method 12 – Get an integer menu choice safely
-    // public int getIntInput(String prompt) {
-    //     while (true) {
-    //         System.out.print("  " + prompt);
-    //         try {
-    //             return Integer.parseInt(scanner.nextLine().trim());
-    //         } catch (NumberFormatException e) {
-    //             displayError("Please enter a valid number.");
-    //         }
-    //     }
-    // }
 
     // Method 13 – Get answer input A/B/C/D or Q to quit
     // Returns char to match Question's correctAnswer field type
