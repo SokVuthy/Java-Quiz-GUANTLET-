@@ -121,6 +121,7 @@ public class QuestionBank {
             if (questions.get(i).getID() == id) {
                 Question removed = questions.remove(i);
                 System.out.println("[DELETED] " + removed);
+                return;
             }
         }
         System.out.println("[ERROR] Question #" + id + " not found.");

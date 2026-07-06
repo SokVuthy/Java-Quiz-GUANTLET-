@@ -1,3 +1,7 @@
+
+import java.util.Scanner;
+import java.util.InputMismatchException;
+public class Main{
 private static final Scanner input = new Scanner(System.in);
 private static final String PASSWORD = "admin1213";
 private static boolean isRunning = true;
@@ -5,7 +9,7 @@ private static boolean isRunning = true;
 private static QuestionBank questionBank;
 private static UserInterface ui;
 
-void main() {
+public static void main(String[] args) {
     clearScreen();
     initializeApp();
     while (isRunning) {
@@ -290,4 +294,4 @@ private static void showLoading() {
         IO.println("Loading interrupted");
     }
 }
-
+}

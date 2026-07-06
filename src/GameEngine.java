@@ -43,7 +43,7 @@ public class GameEngine {
                 current++;
             }
 
-            ui.displayProgress(correctCount, totalQuestions);
+            // ui.displayProgress(correctCount, totalQuestions);
 
             if (current >= deck.size()) {
                 current = 0;

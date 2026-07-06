@@ -59,13 +59,13 @@ public class UserInterface {
             "  ╔══════════════════════════════════════╗",
             "  ║          SELECT CATEGORY             ║",
             "  ╠══════════════════════════════════════╣",
-            "  ║  [1]  Science                       ║",
-            "  ║  [2]  History                       ║",
-            "  ║  [3]  Math                          ║",
-            "  ║  [4]  Geography                     ║",
-            "  ║  [5]  Entertainment                 ║",
-            "  ║  [6]  Mixed (All Categories)        ║",
-            "  ║  [0]  Back                          ║",
+            "  ║  [1]  Science                        ║",
+            "  ║  [2]  History                        ║",
+            "  ║  [3]  Math                           ║",
+            "  ║  [4]  Geography                      ║",
+            "  ║  [5]  Entertainment                  ║",
+            "  ║  [6]  Mixed (All Categories)         ║",
+            "  ║  [0]  Back                           ║",
             "  ╚══════════════════════════════════════╝"
         );
     }
@@ -91,34 +91,34 @@ public class UserInterface {
     // Uses: q.getQuestionText(), q.getOptionA/B/C/D(), q.getID()
     public void displayQuestion(Question q, int questionNumber, int totalRemaining, int score, int correct, int total) {
         System.out.println();
-        System.out.println("  ╔══════════════════════════════════════════════════════════════╗");
-        System.out.printf ("  ║  Question #%-3d  Remaining: %-3d  Score: %-3d                   ║%n",
+        System.out.println("  ╔═══════════════════════════════════════════════════════════════╗");
+        System.out.printf ("  ║  Question #%-3d  Remaining: %-3d  Score: %-3d                    ║%n",
                             questionNumber, totalRemaining, score);
-        System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
+        System.out.println("  ╠═══════════════════════════════════════════════════════════════╣");
         int filled = (total > 0) ? (int)((correct / (double) total) * 20) : 0;
         StringBuilder bar = new StringBuilder("[");
         for (int i = 0; i < 20; i++) {
             bar.append(i < filled ? "█" : "░");
         }
         bar.append("]");
-        System.out.printf("  ║  Progress: %s  %d / %d correct            ║%n", 
+        System.out.printf("  ║  Progress: %s  %d / %d correct             ║%n", 
                         bar, correct, total);
-        System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
+        System.out.println("  ╠═══════════════════════════════════════════════════════════════╣");
         String qText = q.getQuestionText();
         if (qText.length() <= 50) {
-            System.out.printf("  ║  %-60s║%n", qText);
+            System.out.printf("  ║  %-61s║%n", qText);
         } else {
-            System.out.printf("  ║  %-60s║%n", qText.substring(0, 50));
+            System.out.printf("  ║  %-61s║%n", qText.substring(0, 50));
             String rest = qText.substring(50, Math.min(100, qText.length()));
-            System.out.printf("  ║  %-60s║%n", rest);
+            System.out.printf("  ║  %-61s║%n", rest);
         }
         
-        System.out.println("  ╠══════════════════════════════════════════════════════════════╣");
-        System.out.printf("  ║  [A]  %-55s║%n", q.getOptionA());
-        System.out.printf("  ║  [B]  %-55s║%n", q.getOptionB());
-        System.out.printf("  ║  [C]  %-55s║%n", q.getOptionC());
-        System.out.printf("  ║  [D]  %-55s║%n", q.getOptionD());
-        System.out.println("  ╚══════════════════════════════════════════════════════════════╝");
+        System.out.println("  ╠═══════════════════════════════════════════════════════════════╣");
+        System.out.printf("  ║  [A]  %-56s║%n", q.getOptionA());
+        System.out.printf("  ║  [B]  %-56s║%n", q.getOptionB());
+        System.out.printf("  ║  [C]  %-56s║%n", q.getOptionC());
+        System.out.printf("  ║  [D]  %-56s║%n", q.getOptionD());
+        System.out.println("  ╚═══════════════════════════════════════════════════════════════╝");
         System.out.print(" Your answer (A/B/C/D  or  Q to quit): ");
     }
 
@@ -130,22 +130,22 @@ public class UserInterface {
         int lives = (gameEngine != null) ? gameEngine.getLives() : 0;
 
         if (isCorrect) {
-            System.out.println("  ╔═════════════════════════════════════════════╗");
-            System.out.println("  ║         CORRECT!  +10 points                ║");
-            System.out.println("  ║  This question is removed from deck.        ║");
-            System.out.println("  ║ Current Score: " + score + "║");
-            System.out.println("  ╚═════════════════════════════════════════════╝");
+            System.out.println("  ╔══════════════════════════════════════════════╗");
+            System.out.println("  ║         CORRECT!  +10 points                 ║");
+            System.out.println("  ║  This question is removed from deck.         ║");
+            System.out.println("  ║ Current Score: " + score + "                            ║");
+            System.out.println("  ╚══════════════════════════════════════════════╝");
         } else {
             char correctLetter = q.getCorrectAnswer();
             String correctText = q.getOption(correctLetter);
-            System.out.println("  ╔═════════════════════════════════════════════╗");
-            System.out.println("  ║       WRONG!  No points deducted.           ║");
-            System.out.printf ("  ║         Correct: [%c] %-23s║%n",
+            System.out.println("  ╔══════════════════════════════════════════════╗");
+            System.out.println("  ║       WRONG!  No points deducted.            ║");
+            System.out.printf ("  ║         Correct: [%c] %-24s║%n",
                             correctLetter, correctText);
-            System.out.println("  ║ Current Score: " + score + "║");
-            System.out.println("  ║ Attempt Left: " + lives +  "║");
-            System.out.println("  ║  This question will reappear later.         ║");
-            System.out.println("  ╚═════════════════════════════════════════════╝");
+            System.out.println("  ║ Current Score: " + score + "                             ║");
+            System.out.println("  ║ Attempt Left: " + lives +  "                              ║");
+            System.out.println("  ║  This question will reappear later.          ║");
+            System.out.println("  ╚══════════════════════════════════════════════╝");
         }
         pauseForUser();
     }
@@ -343,12 +343,12 @@ public class UserInterface {
     public void displayHowToPlay() {
         System.out.println();
         System.out.println("  ╔══════════════════════════════════════════╗");
-        System.out.println("  ║                HOW TO PLAY              ║");
+        System.out.println("  ║                HOW TO PLAY               ║");
         System.out.println("  ╠══════════════════════════════════════════╣");
         System.out.println("  ║  1. 20 questions are randomly chosen     ║");
         System.out.println("  ║     from a pool of 100+ questions.       ║");
         System.out.println("  ║                                          ║");
-        System.out.println("  ║  2. Answer by typing A, B, C, or D.     ║");
+        System.out.println("  ║  2. Answer by typing A, B, C, or D.      ║");
         System.out.println("  ║                                          ║");
         System.out.println("  ║  3. ✅ Correct answer:                   ║");
         System.out.println("  ║     → +10 points                         ║");
