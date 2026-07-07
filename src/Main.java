@@ -173,15 +173,7 @@ public class Main{
         boolean inUserMenu = true;
 
         while (inUserMenu) {
-            System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
-            System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
-            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
-            System.out.println("┃  ➤ [1] Play by Categories                        ┃");
-            System.out.println("┃  ➤ [2] Play by Random                            ┃");
-            System.out.println("┃  ➤ [3] How to Play                               ┃");
-            System.out.println("┃  ➤ [4] View Statistics                           ┃");
-            System.out.println("┃  ➤ [5] Back                                      ┃");
-            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+            ui.displayUserMenu();
             int choice = getChoice(1, 5);
             switch (choice) {
                 case 1:
@@ -200,7 +192,7 @@ public class Main{
                     inUserMenu = false;
                     break;
                 default:
-
+                    System.out.println("Invalid Input");
                     break;
             }
         }

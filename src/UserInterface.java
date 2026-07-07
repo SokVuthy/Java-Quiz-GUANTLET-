@@ -71,17 +71,17 @@ public class UserInterface {
     }
 
     // Method 4 – Display the user gateway menu
-    // public void displayUserMenu() {
-    //     printBox(
-    //         "  ╔══════════════════════════════════════╗",
-    //         "  ║             USER MENU                ║",
-    //         "  ╠══════════════════════════════════════╣",
-    //         "  ║  [1]  Start Quiz                     ║",
-    //         "  ║  [2]  How to Play                    ║",
-    //         "  ║  [0]  Back to Main Menu              ║",
-    //         "  ╚══════════════════════════════════════╝"
-    //     );
-    // }
+    public void displayUserMenu() {
+         System.out.println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃                 🎮 USER MENU 🎮                  ┃");
+            System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+            System.out.println("┃  ➤ [1] Play by Categories                        ┃");
+            System.out.println("┃  ➤ [2] Play by Random                            ┃");
+            System.out.println("┃  ➤ [3] How to Play                               ┃");
+            System.out.println("┃  ➤ [4] View Statistics                           ┃");
+            System.out.println("┃  ➤ [5] Back                                      ┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+    }
 
     // ==========================================================
     //  QUESTION DISPLAY
