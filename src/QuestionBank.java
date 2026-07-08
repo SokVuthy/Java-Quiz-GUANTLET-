@@ -101,10 +101,11 @@ public class QuestionBank {
     // UPDATE
     // =========================================================================
 
-    public boolean updateQuestion(int id, Question updatedQuestion) {
-        for (int i = 0; i < questions.size(); i++) {
-            if (questions.get(i).getID() == id) {
-                questions.set(i, updatedQuestion);
+    public boolean updateQuestion(int id, String questionText, String optionA, String optionB,
+                                  String optionC, String optionD, char correctAnswer, String categories) {
+        for (Question q : questions) {
+            if (q.getID() == id) {
+                q.updateFields(questionText, optionA, optionB, optionC, optionD, correctAnswer, categories);
                 return true;
             }
         }

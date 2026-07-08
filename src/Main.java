@@ -126,8 +126,11 @@ public class Main{
                     String optD = ui.getStringInput("Option D: ");
                     char correct = ui.getCharInput("Correct answer (A/B/C/D): ");
                     String category = ui.getStringInput("Category: ");
-                    existQuestion.updateFields(text, optA, optB, optC, optD, correct, category);
-                    System.out.println("[OK] Question #" + id + " updated successfully.");
+
+                    boolean success = questionBank.updateQuestion(id, text, optA, optB, optC, optD, correct, category);
+                    if (success) {
+                        System.out.println("[OK] Question #" + id + " updated successfully.");
+                    }
                     break;
                 }
                 case 4: {
