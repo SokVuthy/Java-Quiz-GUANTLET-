@@ -21,24 +21,24 @@ public class QuestionBank {
     }
 
     public void addQuestionFromInput(Scanner input) {
-        System.out.println("Enter the question text:");
+        System.out.print("Enter the question text:");
         String questionText = input.nextLine();
 
-        System.out.println("Enter option A:");
+        System.out.print("Enter option A:");
         String optionA = input.nextLine();
 
-        System.out.println("Enter option B:");
+        System.out.print("Enter option B:");
         String optionB = input.nextLine();
 
-        System.out.println("Enter option C:");
+        System.out.print("Enter option C:");
         String optionC = input.nextLine();
 
-        System.out.println("Enter option D:");
+        System.out.print("Enter option D:");
         String optionD = input.nextLine();
 
         char correctAnswer = getValidatedAnswer(input);
 
-        System.out.println("Enter category (Science/History/Math/Geography/Entertainment):");
+        System.out.print("Enter category (Science/History/Math/Geography/Entertainment):");
         String category = input.nextLine();
 
         Question newQuestion = new Question(questionText, optionA, optionB, optionC, optionD, correctAnswer, category);
@@ -47,7 +47,7 @@ public class QuestionBank {
 
     private char getValidatedAnswer(Scanner input) {
         while (true) {
-            System.out.println("Enter the correct answer (A/B/C/D):");
+            System.out.print("Enter the correct answer (A/B/C/D):");
             String answerInput = input.nextLine().trim().toUpperCase();
             if (answerInput.length() == 1 && "ABCD".contains(answerInput)) {
                 return answerInput.charAt(0);
